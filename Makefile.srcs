@@ -1,27 +1,27 @@
 COMMON_SRCS = ./Common/Changes.cpp \
-	      ./Common/CommandLine.cpp \
-	      ./Common/FileSystem.cpp \
-	      ./Common/Pipe.cpp \
-	      ./Common/Utility.cpp \
-	      ./Common/VersionedAsset.cpp \
-	      ./Common/Status.cpp \
-	      ./Common/Connection.cpp \
-	      ./Common/Command.cpp \
-		  ./Common/Log.cpp \
-		  ./Common/POpen.cpp
+		./Common/CommandLine.cpp \
+		./Common/FileSystem.cpp \
+		./Common/Pipe.cpp \
+		./Common/Utility.cpp \
+		./Common/VersionedAsset.cpp \
+		./Common/Status.cpp \
+		./Common/Connection.cpp \
+		./Common/Command.cpp \
+		./Common/Log.cpp \
+		./Common/POpen.cpp
 
 COMMON_INCLS = ./Common/Changes.h \
-	       ./Common/CommandLine.h \
-	       ./Common/FileSystem.h \
-	       ./Common/Pipe.h \
-	       ./Common/Utility.h \
-	       ./Common/VersionedAsset.h \
-	       ./Common/Status.h \
-		   ./Common/Connection.h \
-	       ./Common/Command.h \
-		   ./Common/Dispatch.h \
-		   ./Common/Log.h \
-		   ./Common/POpen.h
+		./Common/CommandLine.h \
+		./Common/FileSystem.h \
+		./Common/Pipe.h \
+		./Common/Utility.h \
+		./Common/VersionedAsset.h \
+		./Common/Status.h \
+		./Common/Connection.h \
+		./Common/Command.h \
+		./Common/Dispatch.h \
+		./Common/Log.h \
+		./Common/POpen.h
 
 TESTSERVER_SRCS = ./Test/Source/ExternalProcess_Posix.cpp \
 				./Test/Source/TestServer.cpp 
@@ -41,14 +41,17 @@ P4PLUGIN_SRCS = ./P4Plugin/Source/P4Plugin_Posix.cpp \
 		./P4Plugin/Source/P4DeleteCommand.cpp \
 		./P4Plugin/Source/P4DownloadCommand.cpp \
 		./P4Plugin/Source/P4ExitCommand.cpp \
+		./P4Plugin/Source/P4FileModeCommand.cpp \
 		./P4Plugin/Source/P4FileSetBaseCommand.cpp \
 		./P4Plugin/Source/P4GetLatestCommand.cpp \
+		./P4Plugin/Source/P4InfoCommand.cpp \
 		./P4Plugin/Source/P4IncomingChangeAssetsCommand.cpp \
 		./P4Plugin/Source/P4IncomingCommand.cpp \
 		./P4Plugin/Source/P4LockCommand.cpp \
 		./P4Plugin/Source/P4LoginCommand.cpp \
 		./P4Plugin/Source/P4Login2Command.cpp \
 		./P4Plugin/Source/P4LogoutCommand.cpp \
+		./P4Plugin/Source/P4MFA.cpp \
 		./P4Plugin/Source/P4MoveCommand.cpp \
 		./P4Plugin/Source/P4QueryConfigParametersCommand.cpp \
 		./P4Plugin/Source/P4ResolveCommand.cpp \
@@ -57,24 +60,21 @@ P4PLUGIN_SRCS = ./P4Plugin/Source/P4Plugin_Posix.cpp \
 		./P4Plugin/Source/P4SpecCommand.cpp \
 		./P4Plugin/Source/P4StatusBaseCommand.cpp \
 		./P4Plugin/Source/P4StatusCommand.cpp \
+		./P4Plugin/Source/P4StreamsCommand.cpp \
 		./P4Plugin/Source/P4SubmitCommand.cpp \
-		./P4Plugin/Source/P4FileModeCommand.cpp \
 		./P4Plugin/Source/P4Task.cpp \
 		./P4Plugin/Source/P4UnlockCommand.cpp \
-		./P4Plugin/Source/P4InfoCommand.cpp \
-		./P4Plugin/Source/P4StreamsCommand.cpp \
-		./P4Plugin/Source/P4Utility.cpp \
-		./P4Plugin/Source/P4MFA.cpp
+		./P4Plugin/Source/P4Utility.cpp
 
 P4PLUGIN_INCLS = ./P4Plugin/Source/P4Command.h \
-		 ./P4Plugin/Source/P4FileSetBaseCommand.h \
-		 ./P4Plugin/Source/P4StatusBaseCommand.h \
-		 ./P4Plugin/Source/P4StatusCommand.h \
-		 ./P4Plugin/Source/P4Task.h \
-		 ./P4Plugin/Source/P4Info.h \
-		 ./P4Plugin/Source/P4Stream.h \
-		 ./P4Plugin/Source/P4Utility.h \
-		 ./P4Plugin/Source/P4MFA.h
+		./P4Plugin/Source/P4FileSetBaseCommand.h \
+		./P4Plugin/Source/P4Info.h \
+		./P4Plugin/Source/P4MFA.h \
+		./P4Plugin/Source/P4StatusBaseCommand.h \
+		./P4Plugin/Source/P4StatusCommand.h \
+		./P4Plugin/Source/P4Stream.h \
+		./P4Plugin/Source/P4Task.h \
+		./P4Plugin/Source/P4Utility.h
 
 P4PLUGIN_LINK = -lclient -lrpc -lsupp -lssl -lcrypto -lp4script -lp4script_curl -lp4script_sqlite -lp4script_c
 P4PLUGIN_INCLUDE = -I./Common -I./P4Plugin/Source/p4api/include/p4 -I./P4Plugin/Source
