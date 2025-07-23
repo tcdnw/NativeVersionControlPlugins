@@ -1,5 +1,6 @@
 #include "P4Task.h"
 #include "P4Command.h"
+#include "P4PluginVersion.h"
 #include "error.h"
 #include "i18napi.h"
 #include "msgclient.h"
@@ -253,8 +254,7 @@ int P4Task::Run(const bool testmode)
 		{
 			cmd = m_Connection->ReadCommand(args);
 
-			// Make it convenient to get the pipe even though the commands
-			// are callback based.
+			// Make it convenient to get the pipe even though the commands are callback based.
 			P4Command::s_Conn = m_Connection;
 
 			if (cmd == UCOM_Invalid)
@@ -320,11 +320,14 @@ bool P4Task::Reconnect()
 	}
 
 	Error err;
-	m_Client.SetProg( "Unity" );
-	m_Client.SetVersion( "1.0" );
+	m_Client.SetProg("Unity");
+	m_Client.SetVersion(PERFORCE_PLUGIN_VERSION);
 
-	// Set the config because in case of reconnect the
-	// config has been reset
+	m_Connection->Log().Notice() << "PerforcePlugin " PERFORCE_PLUGIN_VERSION << Endl;
+	m_Connection->Log().Notice() << "Client API: " << m_Client.GetAPI() << Endl;
+	m_Connection->Log().Notice() << "Client Build: " << m_Client.GetBuild().Text() << Endl;
+
+	// Set the config because in case of reconnect the config has been reset
 	SetP4Root("");
 	m_Client.SetPort(m_PortConfig.c_str());
 	m_Client.SetUser(m_UserConfig.c_str());

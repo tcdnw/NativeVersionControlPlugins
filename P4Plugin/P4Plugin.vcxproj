@@ -88,6 +88,7 @@
     <ClInclude Include="..\Common\VersionedAsset.h" />
     <ClInclude Include="Source\P4Command.h" />
     <ClInclude Include="Source\P4FileSetBaseCommand.h" />
+    <ClInclude Include="Source\P4PluginVersion.h" />
     <ClInclude Include="Source\P4StatusBaseCommand.h" />
     <ClInclude Include="Source\P4StatusCommand.h" />
     <ClInclude Include="Source\P4Task.h" />

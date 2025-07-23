@@ -70,6 +70,7 @@ P4PLUGIN_INCLS = ./P4Plugin/Source/P4Command.h \
 		./P4Plugin/Source/P4FileSetBaseCommand.h \
 		./P4Plugin/Source/P4Info.h \
 		./P4Plugin/Source/P4MFA.h \
+		./P4Plugin/Source/P4PluginVersion.h \
 		./P4Plugin/Source/P4StatusBaseCommand.h \
 		./P4Plugin/Source/P4StatusCommand.h \
 		./P4Plugin/Source/P4Stream.h \
