@@ -52,6 +52,7 @@
  *
  *	FileSys::GetFd() - return underlying FD_TYPE fd, FST_BINARY only
  *	FileSys::GetSize() - return file size, FST_BINARY,TEXT,ATEXT only
+ *	FileSys::GetCurrentSize() - size of current (not rename()'d) ATEXT file
  *	FileSys::GetOwner() - return the UID of the file owner
  *	FileSys::GetDiskSpace() - fill in data about filesystem space usage.
  *	FileSys::Seek() - seek to offset, FST_BINARY,TEXT,ATEXT only
@@ -216,7 +217,7 @@ class DiskSpaceInfo {
 	StrBuf		*fsType;
 } ;
 
-# ifdef HAS_CPP17
+# ifdef HAS_CPP11
 
 # include <memory>
 
@@ -260,20 +261,11 @@ class FileSys {
 				return f;
 			}
 
-# ifdef HAS_CPP17
+# ifdef HAS_CPP11
 
-	static FileSysUPtr CreateUPtr( FileSysType type ) {
-				FileSysUPtr f =
-				std::make_unique< FileSys* >( Create( type ) );
-				return f;
-			}
+	static FileSysUPtr CreateUPtr( FileSysType type );
+	static FileSysUPtr CreateGlobalTempUPtr( FileSysType type );
 
-	static FileSysUPtr CreateGlobalTempUPtr( FileSysType type ) {
-				FileSysUPtr f =
-				std::make_unique< FileSys* >( CreateGlobalTemp
-				                              ( type ) );
-				return f;
-			}
 # endif
 
 	// special temp for simple locking
@@ -372,6 +364,7 @@ class FileSys {
 
 
 	virtual int	Stat() = 0;
+	virtual int     LinkCount();
 	virtual int	StatModTime() = 0;
 	virtual void	StatModTimeHP(DateTimeHighPrecision *modTime);
 	virtual void	Truncate( Error *e ) = 0;
@@ -390,8 +383,10 @@ class FileSys {
 	virtual FD_PTR	GetFd();
 	virtual int     GetOwner();
 	virtual offL_t	GetSize();
+	virtual offL_t	GetCurrentSize();
 	virtual void	Seek( offL_t offset, Error * );
 	virtual offL_t	Tell();
+	virtual void    DepotSize( offL_t &len, Error * );
 
 	// Convenience wrappers for above
 
@@ -414,6 +409,7 @@ class FileSys {
 
 	void		MakeGlobalTemp();
 	virtual void	MakeLocalTemp( char *file );
+	static void	TempName( char *buf );
 	int		IsDeleteOnClose() { return isTemp; }
 	virtual void	SetDeleteOnClose() { isTemp = 1; }
 	virtual void	ClearDeleteOnClose() { isTemp = 0; }
@@ -470,6 +466,7 @@ class FileSys {
 	void		GetDiskSpace( DiskSpaceInfo *info, Error *e );
 
 	void		LowerCasePath();
+
     protected:
 
 	FileOpenMode	mode;		// read or write
@@ -486,7 +483,6 @@ class FileSys {
 # endif
 
     private:
-	void		TempName( char *buf );
 
 	int		isTemp;
 	int		preserveCWD;

@@ -45,7 +45,8 @@ class ClientScript
 
 	    std::vector< std::unique_ptr< Extension > > exts;
 
-	    StrBuf path, pattern;
+	    std::vector< std::string > patterns;
+	    StrBuf path;
 	    Client* client;
 };
 

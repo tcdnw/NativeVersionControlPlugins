@@ -57,6 +57,7 @@
  * NEED_GETUID - getuid(),setuid() etc.
  * NEED_IOCTL - ioctl() call and flags for UNIX
  * NEED_MKDIR - mkdir()
+ * NEED_MIMALLOC - mimalloc initialization
  * NEED_MMAP - mmap()
  * NEED_OPENDIR - opendir(), etc
  * NEED_POPEN - popen(), pclose()
@@ -119,7 +120,7 @@
 # endif
 
 # if defined( NEED_GETUID )
-# if defined ( OS_MACOSX ) || defined ( OS_DARWIN ) || defined ( unix )
+# if defined ( OS_MACOSX ) || defined ( OS_DARWIN ) || defined ( __unix__ )
 # define HAVE_GETUID
 # endif
 # endif
@@ -157,15 +158,15 @@ extern int errno;
 // so that _WIN32_WINNT will flavor definitions.
 # ifdef OS_NT
 # define WIN32_LEAN_AND_MEAN
-// current default is WinXP; IPv6 code must set these macros to WinVista
+// current default is Win7; IPv6 code needs these macros >= WinVista
 // before including this file (see net/netportipv6.h for details)
 # if !defined(NTDDI_VERSION) || (NTDDI_VERSION < 0x0501000)
 #   undef NTDDI_VERSION
-#   define NTDDI_VERSION    0x0501000
+#   define NTDDI_VERSION    0x06010000
 # endif // NTDDI_VERSION
-# if !defined(_WIN32_WINNT) || (_WIN32_WINNT < 0x0501)
+# if !defined(_WIN32_WINNT) || (_WIN32_WINNT < 0x0601)
 #   undef _WIN32_WINNT
-#   define _WIN32_WINNT     0x0501
+#   define _WIN32_WINNT     0x0601
 # endif // _WIN32_WINNT
 # if !defined(WINVER) || (WINVER < _WIN32_WINNT)
 #   undef WINVER
@@ -186,7 +187,7 @@ extern int errno;
 # ifdef OS_NT
 # define HAVE_SRWLOCK
 # ifdef NEED_SRWLOCK
-# if (_MSC_VER >= 1800)
+# if (_MSC_VER >= 1800) && (!defined(_WIN32_WINNT) || (_WIN32_WINNT < 0x0600))
 # undef _WIN32_WINNT
 # define _WIN32_WINNT 0x0600
 # endif // _MSC_VER
@@ -207,18 +208,33 @@ extern int errno;
 # endif // NEED_DBGBREAK
 # endif // OS_NT
 
-// Smart Heap instrumentation.
+# include "malloc_override.h"
+
 # ifdef MEM_DEBUG
-# define NEED_SMARTHEAP
+#   ifdef USE_MIMALLOC
+#     define NEED_MIMALLOC
+#   endif
+#   ifdef USE_SMARTHEAP
+#     define NEED_SMARTHEAP
+#   endif
 # endif
+
+// Mimalloc instrumentation.
+# ifdef NEED_MIMALLOC
+#   if defined( USE_MIMALLOC )
+#     define HAVE_MIMALLOC
+#   endif // USE_MIMALLOC
+# endif // NEED_MIMALLOC
+
+// Smart Heap instrumentation.
 # ifdef NEED_SMARTHEAP
-# if defined( USE_SMARTHEAP )
-# ifdef OS_NT
-# include <windows.h>
-# endif // OS_NT
-# include <smrtheap.h>
-# define HAVE_SMARTHEAP
-# endif // USE_SMARTHEAP
+#   if defined( USE_SMARTHEAP )
+#     ifdef OS_NT
+#       include <windows.h>
+#     endif // OS_NT
+#     include <smrtheap.h>
+#     define HAVE_SMARTHEAP
+#   endif // USE_SMARTHEAP
 # endif // NEED_SMARTHEAP
 
 # ifdef NEED_FLOCK
@@ -488,7 +504,7 @@ extern "C" int socketpair(int, int, int, int*);
 # endif
 
 # ifdef NEED_SYSLOG
-#  if defined( unix )
+#  if defined( __unix__ )
 #   define HAVE_SYSLOG
 #   include <syslog.h>
 #  elif defined( OS_NT )
@@ -753,6 +769,11 @@ typedef unsigned int p4size_t;
 # define vsnprintf _vsnprintf 
 # endif
 
+# if defined(_MSC_VER) && _MSC_VER < 1900 || \
+     !defined(_MSC_VER) && defined(_MSC_FULL_VER)
+# define strtoll _strtoi64
+# endif
+
 // C++11 or higher
 # if __cplusplus >= 201103L
 #  ifndef HAS_CPP11
@@ -760,17 +781,36 @@ typedef unsigned int p4size_t;
 #  endif
 # endif
 
+// C++14 or higher
+# if __cplusplus >= 201402L
+#   define HAS_CPP14
+# endif
+
 // C++17 or higher
 # if __cplusplus >= 201703L
 #   define HAS_CPP17
+# endif
+
+# if defined(_MSC_VER) && _MSC_VER < 1900
+#  define HAS_BROKEN_CPP11
 # endif
 
 # ifdef HAS_CPP11
 #   define HAS_PARALLEL_SYNC_THREADS
 # endif
 
-# if defined(HAS_CPP17) && defined(USE_EXTENSIONS) && USE_EXTENSIONS == 1
+# if defined(HAS_CPP14) && defined(USE_EXTENSIONS) && USE_EXTENSIONS == 1
 #   define HAS_EXTENSIONS
+# endif
+
+# include "sanitizers.h"
+
+# ifdef __GNUC__
+# define GCC_VERSION (__GNUC__ * 10000 \
+                     + __GNUC_MINOR__ * 100 \
+                     + __GNUC_PATCHLEVEL__)
+// E.g.  GCC > 3.2.0
+// #if GCC_VERSION > 30200
 # endif
 
 # ifdef OS_NT
@@ -790,6 +830,9 @@ typedef unsigned int p4size_t;
 # endif // OS_NTX86
 
 # ifndef OS_MINGW
+# ifndef NOMINMAX
+#   define NOMINMAX
+# endif // !NOMINMAX
 # include <windef.h>
 # include <winnt.h>
 # else
@@ -838,5 +881,10 @@ typedef int FD_TYPE;
 typedef int FD_PTR;
 
 # endif // !OS_NT
+
+# if !defined( HAS_CPP11 ) && !defined( LLONG_MIN )
+#  define LLONG_MIN (-9223372036854775807LL - 1)
+#  define LLONG_MAX   9223372036854775807LL
+# endif
 
 # endif // P4STDHDRS_H

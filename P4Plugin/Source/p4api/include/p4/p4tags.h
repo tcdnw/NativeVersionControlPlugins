@@ -101,11 +101,14 @@ struct P4Tag {
 	static const char v_autoLogin[];
 	static const char v_autoTune[];
 	static const char v_baseName[];
+	static const char v_behindBytes[];
+	static const char v_behindJnls[];
 	static const char v_bits[];
 	static const char v_blob[];
 	static const char v_blockCount[];
 	static const char v_branch[];
 	static const char v_broker[];
+	static const char v_bytesBehind[];
 	static const char v_archiveFile[];
 	static const char v_caddr[];
 	static const char v_caseHandling[];
@@ -139,8 +142,15 @@ struct P4Tag {
 	static const char v_committerDate[];
 	static const char v_compare[];
 	static const char v_compCksum[];
+	static const char v_configurableName[];
+	static const char v_configurableValue[];
+	static const char v_configurables[];
 	static const char v_confirm[];
+	static const char v_conflict[];
+	static const char v_copied[];
+	static const char v_cumulative[];
 	static const char v_counter[];
+	static const char v_laddr[];
 	static const char v_current[];
 	static const char v_cwd[];
 	static const char v_daddr[];
@@ -161,9 +171,12 @@ struct P4Tag {
 	static const char v_digestTypeGitBinary[];
 	static const char v_digestTypeSHA256[];
 	static const char v_dir[];
+	static const char v_disabled[];
 	static const char v_enableStreams[];
 	static const char v_enableGraph[];
+	static const char v_endFromChange[];
 	static const char v_endFromRev[];
+	static const char v_endToChange[];
 	static const char v_endToRev[];
 	static const char v_erev[];
 	static const char v_expandAndmaps[];
@@ -173,6 +186,7 @@ struct P4Tag {
 	static const char v_extraTagType[];
 	static const char v_failoverSeen[];
 	static const char v_fatal[];
+	static const char v_field[];
 	static const char v_fileCount[];
 	static const char v_fileNum[];
 	static const char v_fileSize[];
@@ -181,7 +195,12 @@ struct P4Tag {
 	static const char v_fmt[];
 	static const char v_forceType[];
 	static const char v_fromFile[];
+	static const char v_fromLbrFile[];
+	static const char v_fromLbrPath[];
+	static const char v_fromLbrRev[];
+	static const char v_fromLbrType[];
 	static const char v_fromRev[];
+	static const char v_fromStream[];
 	static const char v_fseq[];
 	static const char v_func[];
 	static const char v_func2[];
@@ -209,6 +228,11 @@ struct P4Tag {
 	static const char v_key[];
 	static const char v_language[];
 	static const char v_lbrFile[];		// also remote depot
+	static const char v_lbrChange[];	
+	static const char v_lbrPath[];
+	static const char v_lbrRelPath[];
+	static const char v_lbrRelTo[];
+	static const char v_lbrRelToPath[];
 	static const char v_lbrRev[];		// also remote depot
 	static const char v_lbrType[];		// also remote depot
 	static const char v_lbrRefCount[];
@@ -222,7 +246,9 @@ struct P4Tag {
 	static const char v_line[];
 	static const char v_locale[];
 	static const char v_lower[];
+	static const char v_lockGlobal[];
 	static const char v_lockId[];
+	static const char v_lockOnCommit[];
 	static const char v_lockStatus[];
 	static const char v_mangle[];
 	static const char v_matchedLine[];
@@ -232,6 +258,7 @@ struct P4Tag {
 	static const char v_maxOpenFiles[];
 	static const char v_maxResults[];
 	static const char v_maxScanRows[];
+	static const char v_maxValue[];
 	static const char v_mergeAuto[];
 	static const char v_mergeConfirm[];
 	static const char v_mergeDecline[];
@@ -246,6 +273,7 @@ struct P4Tag {
 	static const char v_nocase[];
 	static const char v_noclobber[];
 	static const char v_noecho[];
+	static const char v_noneFound[];
 	static const char v_noprompt[];
 	static const char v_offset[];
 	static const char v_oid[];
@@ -255,6 +283,8 @@ struct P4Tag {
 	static const char v_otherAction[];
 	static const char v_otherChange[];
 	static const char v_otherLock[];
+	static const char v_otherLockGlobal[];
+	static const char v_otherLockOnCommit[];
 	static const char v_otherOpen[];
 	static const char v_ourLock[];
 	static const char v_packName[];
@@ -270,11 +300,16 @@ struct P4Tag {
 	static const char v_preview[];
 	static const char v_prog[];
 	static const char v_progress[];
+	static const char v_progressDone[];
+	static const char v_progressHandle[];
+	static const char v_progressType[];
+	static const char v_progressUpdate[];
 	static const char v_proxy[];
 	static const char v_proxyAddress[];
 	static const char v_proxyEncryption[];
 	static const char v_proxyCertExpires[];
 	static const char v_proxyRoot[];
+	static const char v_proxyCacheRoot[];
 	static const char v_proxyVersion[];
 	static const char v_purge[];
 	static const char v_pusher[];
@@ -297,6 +332,8 @@ struct P4Tag {
 	static const char v_rUserHelp[];
 	static const char v_rUserPrompt[];
 	static const char v_rUserResult[];
+	static const char v_rMoveReaddIntegConflictIgnored[];
+	static const char v_rMoveReaddIntegConflictSkip[];
 	static const char v_rcvbuf[];
 	static const char v_reason[];
 	static const char v_ref[];
@@ -304,6 +341,7 @@ struct P4Tag {
 	static const char v_remoteFunc[];
 	static const char v_remoteMap[];
 	static const char v_remoteRange[];
+	static const char v_repair[];
 	static const char v_repo[];
 	static const char v_repoName[];
 	static const char v_reresolvable[];
@@ -312,12 +350,17 @@ struct P4Tag {
 	static const char v_resolveType[];
 	static const char v_rev[];
 	static const char v_rev2[];
+	static const char v_revertmovecheck[];
+	static const char v_revertmovedirnotempty[];
+	static const char v_revertmovermdir[];
 	static const char v_rmdir[];
 	static const char v_rseq[];
 	static const char v_scanSize[];
 	static const char v_scope[];
 	static const char v_secondFactor[];
 	static const char v_security[];
+	static const char v_skipped[];
+	static const char v_snapped[];
 	static const char v_sndbuf[];
 	static const char v_sendspec[];
 	static const char v_sequence[];
@@ -344,11 +387,15 @@ struct P4Tag {
 	static const char v_size[];
 	static const char v_specdef[];
 	static const char v_specstring[];
+	static const char v_speccomment[];
 	static const char v_specFormatted[];
+	static const char v_spectype[];
 	static const char v_srev[];
 	static const char v_sso[];
 	static const char v_ssoAuth[];
+	static const char v_startFromChange[];
 	static const char v_startFromRev[];
+	static const char v_startToChange[];
 	static const char v_startToRev[];
 	static const char v_stat[];
 	static const char v_status[];
@@ -363,6 +410,7 @@ struct P4Tag {
 	static const char v_theirTime[];
 	static const char v_time[];
 	static const char v_toFile[];
+	static const char v_toStream[];
 	static const char v_token[];
 	static const char v_token2[];
 	static const char v_total[];
@@ -381,6 +429,7 @@ struct P4Tag {
 	static const char v_unresolved[];
 	static const char v_upper[];
 	static const char v_url[];
+	static const char v_upgrade[];
 	static const char v_user[];
 	static const char v_userChanged[];
 	static const char v_userName[];
@@ -395,6 +444,7 @@ struct P4Tag {
 	// server-to-server or server-to-proxy variables
 	// clients should not look at these
 
+	static const char v_adjunctMsgs[];
 	static const char v_allTamperCheck[];	// p4 submit
 	static const char v_altArg[];		// p4 jobspec
 	static const char v_altArg2[];		// p4 change
@@ -432,9 +482,11 @@ struct P4Tag {
 	static const char v_integRec2[];
 	static const char v_ipaddr[];
 	static const char v_keyVal[];		// p4 index
+	static const char v_label[];
 	static const char v_labelEntity[];
 	static const char v_leaveUnchanged[];	// submit
 	static const char v_lockAll[];		// admin
+	static const char v_lockRec[];
 	static const char v_message[];		// p4 diff
 	static const char v_message2[];		// p4 release
 	static const char v_movedFile[];
@@ -444,6 +496,7 @@ struct P4Tag {
 	static const char v_peer[];
 	static const char v_peerAddress[];
 	static const char v_propigate[];	// proxy chaining test
+	static const char v_remoteFetch[];	// no on-demand fetch bg submit
 	static const char v_reopen[];  		// submit
 	static const char v_replace[];		// shelve
 	static const char v_revertUnchanged[];  // submit
@@ -457,6 +510,7 @@ struct P4Tag {
 	static const char v_setViews[];		// set client views even if empty
 	static const char v_shelved[];          // shelve (2009.2)
 	static const char v_shelveFile[];
+	static const char v_shelvedStream[];    // stream is shelved
 	static const char v_state[];
 	static const char v_stream[];       	// stream name
 	static const char v_stream2[];       	// other stream name

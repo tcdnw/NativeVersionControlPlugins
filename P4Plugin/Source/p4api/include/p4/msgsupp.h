@@ -323,6 +323,7 @@ class MsgSupp {
 	static ErrorId OptionTrigger;
 	static ErrorId OptionIgnoreHave;
 	static ErrorId OptionGraphOnly;
+	static ErrorId OptionNoGraph;
 	static ErrorId OptionMinSize;
 	static ErrorId OptionMaxSize;
 	static ErrorId OptionNameOnly;
@@ -346,6 +347,7 @@ class MsgSupp {
 	static ErrorId OptionGraph;
 	static ErrorId OptionOneParent;
 	static ErrorId OptionOneline;
+	static ErrorId OptionNoAbbrev;
 	static ErrorId OptionMerges;
 	static ErrorId OptionForceFailover;
 	static ErrorId OptionIgnoreMaster;
@@ -360,6 +362,10 @@ class MsgSupp {
 	static ErrorId OptionParentNumber;
 	static ErrorId OptionPkgExtension;
 	static ErrorId OptionPath;
+	static ErrorId OptionSign;
+	static ErrorId OptionCert;
+	static ErrorId OptionComment;
+	static ErrorId OptionAllowUnsigned;
 	static ErrorId OptionNoSync;
 	static ErrorId OptionNoScript;
 	static ErrorId OptionScriptLang;
@@ -367,6 +373,22 @@ class MsgSupp {
 	static ErrorId OptionChangeStart;
 	static ErrorId OptionIntoOnly;
 	static ErrorId OptionScriptAPIVersion;
+	static ErrorId OptionRunExtensionCmd;
+	static ErrorId OptionShowMemInfo;
+	static ErrorId OptionRepair;
+	static ErrorId OptionDeleteItem;
+	static ErrorId OptionTarget;
+	static ErrorId OptionInterval;
+	static ErrorId OptionWait;
+	static ErrorId OptionMissingInterval;
+	static ErrorId OptionMissingWait;
+	static ErrorId OptionMissingCount;
+	static ErrorId OptionSSInherit;
+	static ErrorId OptionSSNoInherit;
+	static ErrorId OptionSSSourceComments;
+	static ErrorId OptionSSParentView;
+	static ErrorId OptionLocalLicense;
+	static ErrorId OptionAutoReload;
 
 	static ErrorId TooManyLockTrys;
 
@@ -382,6 +404,20 @@ class MsgSupp {
 	static ErrorId ManifestParseError;
 	static ErrorId InvalidIntegerRange;
 	static ErrorId FatalLockError;
+	static ErrorId MissingKeyCert;
+	static ErrorId InternalSSLerror;
+	static ErrorId InvalidFormatSigFile;
+	static ErrorId ExtSignatureFailure;
+	static ErrorId ExtensionPackingSuccess;
+	static ErrorId OptionOnly;
+	static ErrorId OptionShowRealtime;
+	static ErrorId RenameTempFailed;
+	static ErrorId RenameMkdirFailed;
+	static ErrorId RenameRmdirFailed;
+	static ErrorId RenameDirSearchFailed;
+	static ErrorId RenameDirNotEmpty;
+	static ErrorId OptionCleanPurge;
+	static ErrorId OptionViewMatch;
 
 	// Retired ErrorIds. We need to keep these so that clients 
 	// built with newer apis can commnunicate with older servers 

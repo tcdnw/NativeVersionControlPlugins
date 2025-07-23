@@ -15,6 +15,9 @@
  *		x?	- flag takes an optional argument (--long=arg only)
  *		x+	- flag takes a flag and arg (-xyarg or -xy arg)
  *		x#	- flag takes a non-neg numeric arg (-xN or -x N)
+ *		x$	- same as : except it indicates to stop parsing after
+ *		          if more arguments follow, only the first
+ *		          will be assigned to option, the rest not parsed.
  */
 
 const int N_OPTS = 256;
@@ -302,6 +305,14 @@ class Options
 	                FailoverVerification, // failover -v
 	                Install        , // --install (extension)
 	                ChangeStart    , // integrated -s change
+	                Target         , // heartbeat -t
+	                Interval       , // heartbeat -i
+	                Wait           , // heartbeat -w
+	                MissingInterval, // heartbeat -m
+	                MissingWait    , // heartbeat -r
+	                MissingCount   , // heartbeat -c
+	                LocalLicense   , // license -u -l
+	                AutoReload     , // labels -R
 
 	        // options which have only long-form option names go here:
 
@@ -342,6 +353,7 @@ class Options
 	                Trigger        , // pull -u --trigger
 	                IgnoreHave     , // -p --ignore-have
 	                GraphOnly      , // --graph-only
+	                NoGraph        , // --no-graph
 			MinSize        , // --min-size
 			MaxSize        , // --max-size
 			NameOnly       , // --name-only
@@ -358,6 +370,7 @@ class Options
 			Index          , // --index (filelog)
 			Graph          , // --graph (filelog)
 			Oneline        , // --oneline (filelog)
+			NoAbbrev       , // --no-abbrev (filelog)
 			OneParent      , // --one-parent (filelog)
 			Merges         , // --merges (filelog)
 			CreateSampleExtension, // --sample (extension)
@@ -374,7 +387,26 @@ class Options
 			ScriptLangVersion, // --script-lang-version
 			IntoOnly       , // --into-only (integrated)
 			ScriptAPIVersion, // --script-api-version
+			RunExtension   , // --run (extension)
+			ShowMemInfo    , // --show-mem-info
+			Repair         , // --repair
+			DeleteItem     , // --delete <item>
+			Sign           , // --sign <dir> (extension)
+			Cert           , // --cert (ext certificate)
+			Comment        , // --comment comment
+			AllowUnsigned  , // --allow-unsigned
+			SSInherit      , // --inherit
+			SSNoInherit    , // --noinherit
+			SSSourceComments, // --source-comments
+			SSParentView,    // --parentview
 			SwitchStreamUnrelated  , // switch --allow-unrelated
+			Only            , // --only BAD | MISSING
+			ShowRealtime    , // --show-realtime
+			CleanPurge      , // --purged-only
+			ViewMatch       , // --viewmatch
+#ifdef _DEBUG
+			DebugBreak,    // --debugbreak
+#endif
 
 	                UnusedLastOption
 	} ;

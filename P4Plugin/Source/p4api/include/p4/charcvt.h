@@ -69,6 +69,8 @@ public:
     static unsigned long offsetsFromUTF8[];
     static unsigned long minimumFromUTF8[];
 
+    static void Init();
+
 protected:
     friend class CharSetCvtCache;  // for the following default constructor
     CharSetCvt() : lasterr(0), linecnt(1), charcnt(0), fastbuf(0), fastsize(0){}

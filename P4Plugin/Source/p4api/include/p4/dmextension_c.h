@@ -7,12 +7,11 @@
 # ifdef HAS_EXTENSIONS
 
 # include <map>
-# include <any>
+# include <p4_any.h>
 # include <tuple>
 # include <string>
 # include <vector>
-# include <variant>
-# include <optional>
+# include <p4_optional.h>
 # include <functional>
 # include <unordered_map>
 # include <unordered_set>
@@ -41,7 +40,7 @@ class ExtensionClient : public Extension
 	public:
 
 	    ExtensionClient( const SCR_VERSION v, const int apiVersion,
-	                     std::optional<
+	                     p4_std_optional::optional<
 	                     std::unique_ptr< ExtensionCallerData > > ecd,
 	                     Error* e );
 
@@ -90,6 +89,7 @@ class ExtensionClient : public Extension
 	    void SetMaxMem( int ){}
 	    void SetMaxTime( int ){}
 	    bool doFile( const char*, Error* ){ return false; }
+	    bool doStr( const char*, Error* ){ return false; }
 
 	    void DisableExtensionBinding();
 };

@@ -279,6 +279,7 @@ class MsgDm {
 	static ErrorId ChangeDeleteHasFiles;
 	static ErrorId ChangeDeleteShelved;
 	static ErrorId ChangeDeleteHasStream;
+	static ErrorId ChangeDeleteTaskUnload;
 	static ErrorId ChangeDeleteSuccess;
 	static ErrorId ChangeNotOwner;
 	static ErrorId CommittedNoPerm;
@@ -633,6 +634,8 @@ class MsgDm {
 	static ErrorId PurgeSnapData;
 	static ErrorId PurgeDeleted;
 	static ErrorId PurgeCheck;
+	static ErrorId PurgePurged;
+	static ErrorId PurgePurgeCheck;
 	static ErrorId PurgeNoRecords;
 	static ErrorId PurgeData;
 	static ErrorId PurgeActiveTask;
@@ -1003,6 +1006,8 @@ class MsgDm {
 	static ErrorId LogFormatInvalid;
 	static ErrorId LogNumericInvalid;
 	static ErrorId LogEventsUnmatched;
+	static ErrorId LogEventUnknown;
+	static ErrorId LogEventVerUnknown;
 	static ErrorId JournalStateBadFmt;
 	static ErrorId JournalStateCkp;
 
@@ -1023,6 +1028,8 @@ class MsgDm {
 	static ErrorId CommandNotOnServer;
 	static ErrorId MalformedUUID;
 	static ErrorId TooManyConfigurables;
+	static ErrorId DataOutOfRange;
+	static ErrorId ExtensionBadDirectory;
 
 	// Retired ErrorIds. We need to keep these so that clients 
 	// built with newer apis can commnunicate with older servers 

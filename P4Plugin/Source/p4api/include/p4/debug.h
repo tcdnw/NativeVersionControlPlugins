@@ -54,8 +54,19 @@ enum P4DebugType {
 	DT_STG,         // Tracking storage records.
 	DT_THREAD,	// threading
 	DT_EXTS,	// exts (extension)
+	DT_PROTECT,	// protections stats
+	DT_HEARTBEAT,	// Heartbeat related
+	DT_SHELVE,	// Shelving related
+	DT_SQW,		// StreamQWorker related
+	DT_TOPOLOGY,	// Topology
 	DT_LAST
 }  ;
+
+enum P4TunableType {
+	DTT_NONE,	// Unknown tuneable
+	DTT_INT,	// Numeric tuneable
+	DTT_STR,	// String tuneable
+};
 
 extern P4MT int list2[];
 
@@ -71,6 +82,8 @@ class P4Tunable {
 	        list2[t] : list[t].value;
 	}
 	int		GetLevel( const char *n ) const;
+	StrBuf		GetString( const char *n ) const;
+	StrBuf		GetString( int t ) const;
 	int		GetIndex( const char *n ) const;
 	const char	*GetName( int t ) const { return list[t].name; }
 	int		IsSet( int t ) const { return list[t].isSet; }
@@ -78,6 +91,7 @@ class P4Tunable {
 	int		IsKnown( const char * n );
 	int		IsNumeric( const char * n );
 	void		IsValid( const char * n, const char * v, Error *e );
+	int		IsSensitive( int t ) const { return list[t].sensitive;}
 	void		Unbuffer();
 	void		UnsetAll();
 
@@ -100,8 +114,16 @@ class P4Tunable {
 	    int modVal;
 	    int k;		// what's 1k? 1000 or 1024?
 	    int original;
+	    int sensitive;
 	} list[];
-
+	
+	static struct stunable {
+	    const char *name;
+	    int isSet;
+	    const char *def;
+	    char *value;
+	    int sensitive;
+	} slist[];
 } ;
 
 typedef void (*DebugOutputHook)( void *context, const StrPtr *buffer );

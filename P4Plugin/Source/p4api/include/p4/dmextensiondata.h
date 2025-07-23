@@ -9,7 +9,7 @@
 # include <map>
 # include <string>
 # include <vector>
-# include <optional>
+# include <p4_optional.h>
 # include <functional>
 # include <unordered_map>
 # include <unordered_set>
@@ -24,12 +24,12 @@ class ExtensionData
 
 	    // Pre-install validation and installation.
 	    ExtensionData( const StrBuf& archiveFile,
-	                   std::optional< StrBuf > unzipPath, Error* e );
+	                   p4_std_optional::optional< StrBuf > unzipPath, Error* e );
 
 	    // Load an existing, installed ext.
 	    ExtensionData( const StrBuf& depotFile, const int& depotRev,
 	                   const StrBuf& srvExtsDir,
-	                   const std::optional< StrBuf > archiveFile,
+	                   const p4_std_optional::optional< StrBuf > archiveFile,
 	                   Error* e );
 
 	   virtual ~ExtensionData();
@@ -91,8 +91,8 @@ class ExtensionData
 	    SplitSpecUUID( const StrBuf& SpecAndUUID );
 
 	    FileSysUPtr Unzip( const StrBuf &zipFileName,
-	                       std::optional< StrBuf > unzipPath,
-	                       std::optional< StrBuf > oneFile, Error *e );
+	                       p4_std_optional::optional< StrBuf > unzipPath,
+	                       p4_std_optional::optional< StrBuf > oneFile, Error *e );
 
 	    StrBuf srvExtsDir; // server.extensions.dir
 
@@ -123,6 +123,8 @@ class ExtensionData
 } ;
 
 # else
+
+//# include <p4_optional.h>
 
 class ExtensionData
 {

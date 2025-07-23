@@ -9,7 +9,7 @@
 # include <map>
 # include <string>
 # include <vector>
-# include <optional>
+# include <p4_optional.h>
 # include <functional>
 # include <unordered_map>
 # include <unordered_set>
@@ -24,12 +24,13 @@ class ExtensionDataClient : public ExtensionData
 
 	    // Pre-install validation and installation.
 	    ExtensionDataClient( const StrBuf& archiveFile,
-	                   std::optional< StrBuf > unzipPath, Error* e );
+	                         p4_std_optional::optional< StrBuf > unzipPath,
+	                         Error* e );
 
 	    // Load an existing, installed ext.
 	    ExtensionDataClient( const StrBuf& depotFile, const int& depotRev,
 	                         const StrBuf& srvExtsDir,
-	                         const std::optional< StrBuf > archiveFile,
+	                         const p4_std_optional::optional< StrBuf > archiveFile,
 	                         Error* e );
 
 	    static const std::string nameDelimiter;

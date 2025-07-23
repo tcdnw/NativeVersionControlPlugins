@@ -7,12 +7,11 @@
 # ifdef HAS_EXTENSIONS
 
 # include <map>
-# include <any>
+# include <p4_any.h>
 # include <tuple>
 # include <string>
 # include <vector>
-# include <variant>
-# include <optional>
+# include <p4_optional.h>
 # include <functional>
 # include <unordered_map>
 # include <unordered_set>
@@ -31,6 +30,32 @@ struct ExtensionCallerData
 
 	std::function< void( const char* msg ) > SetClientMsg
 	    = []( const char* msg ){};
+	std::function< bool( const char *desc, const long total,
+	    const long position ) > ProgressSet
+	    = []( const char *desc, const long total, 
+	          const long position ){ return true; };
+	std::function< std::tuple< const bool, std::string >( const char* form, 
+	        std::function< bool( const char * ) > fn )
+	    > ClientEditData = []( const char* form,
+	            std::function< bool( const char * ) > fn ){
+	        return std::make_tuple< bool, std::string >( true, std::string() ); };
+	std::function< bool( const long pos ) > ProgressIncrement
+	    = []( const long pos ){ return true; };
+	std::function< std::tuple< bool, std::string > ( const char* msg ) > ClientOutputText
+	    = []( const char* msg ){ return std::make_tuple( true, std::string( "Success" ) ); };
+	std::function< std::tuple< bool, std::string > ( const int level, const char* msg ) 
+	        > ReportError
+	    = []( const int level, const char* msg )
+	        { return std::make_tuple< bool, std::string >( true,
+	            std::string( "Success" ) ); };
+	std::function< std::tuple< bool, std::string > ( std::map< std::string, 
+	        std::string > tagmsg ) > FstatInfo
+	    = []( std::map< std::string, std::string > tagmsg ){
+	        return std::make_tuple< bool, std::string >( true, 
+	            std::string( "Success" ) ); };
+	std::function< bool( const char* user, const char *path, 
+	    int perm ) > CheckPermission
+	    = []( const char* user, const char *path, int perm ){ return false; };
 	std::function< void() > SetExtExecError
 	    = [](){};
 	StrBuf archDir, dataDir;
@@ -52,7 +77,7 @@ class Extension : public p4script
 	public:
 
 	     Extension( const SCR_VERSION v, const int apiVersion,
-	                std::optional<
+	                p4_std_optional::optional<
 	                std::unique_ptr< ExtensionCallerData > > ecd, Error* e,
 	                const bool alloc = false );
 	    virtual ~Extension();
@@ -61,7 +86,7 @@ class Extension : public p4script
 	    virtual void doBindings( Error* e );
 	    ExtensionCallerData* GetECD();
 
-	    std::optional< std::any > RunCallBack( const char* name, Error* e );
+	    p4_std_any::p4_any RunCallBack( const char* name, Error* e );
 
 	protected:
 
@@ -72,7 +97,7 @@ class Extension : public p4script
 
 	private:
 
-	    std::optional< std::unique_ptr< ExtensionCallerData > > ecd;
+	    p4_std_optional::optional< std::unique_ptr< ExtensionCallerData > > ecd;
 } ;
 
 class Extension::extImpl
@@ -84,7 +109,7 @@ class Extension::extImpl
 
 	    virtual void doBindings( Error* e ) = 0;
 
-	    virtual std::optional< std::any >
+	    virtual p4_std_any::p4_any
 	    RunCallBack( const char* name, Error* e ) = 0;
 
 	protected:
@@ -101,7 +126,7 @@ class Extension::extImpl53 : public Extension::extImpl
 
 	    virtual void doBindings( Error* e );
 
-	    std::optional< std::any > RunCallBack( const char* name, Error* e );
+	    p4_std_any::p4_any RunCallBack( const char* name, Error* e );
 } ;
 
 # else

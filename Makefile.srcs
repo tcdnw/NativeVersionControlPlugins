@@ -24,7 +24,7 @@ COMMON_INCLS = ./Common/Changes.h \
 		./Common/POpen.h
 
 TESTSERVER_SRCS = ./Test/Source/ExternalProcess_Posix.cpp \
-				./Test/Source/TestServer.cpp 
+				./Test/Source/TestServer.cpp
 TESTSERVER_INCLS = ./Test/Source/ExternalProcess.h
 TESTSERVER_INCLUDE = -I./Common
 
@@ -77,5 +77,5 @@ P4PLUGIN_INCLS = ./P4Plugin/Source/P4Command.h \
 		./P4Plugin/Source/P4Task.h \
 		./P4Plugin/Source/P4Utility.h
 
-P4PLUGIN_LINK = -lclient -lrpc -lsupp -lssl -lcrypto -lp4script -lp4script_curl -lp4script_sqlite -lp4script_c
+P4PLUGIN_LINK = -lclient -lrpc -lsupp -lp4api -lp4script -lp4script_curl -lp4script_sqlite -lp4script_c -lssl -lcrypto
 P4PLUGIN_INCLUDE = -I./Common -I./P4Plugin/Source/p4api/include/p4 -I./P4Plugin/Source

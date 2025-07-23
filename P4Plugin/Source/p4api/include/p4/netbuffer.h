@@ -74,6 +74,7 @@
  */
 
 typedef struct z_stream_s z_stream;
+class NetSslCredentials;
 
 class NetBuffer : public NetTransport {
 
@@ -95,6 +96,8 @@ class NetBuffer : public NetTransport {
 	    		{ return transport->IsSockIPv6(); }
 	void    	ClientMismatch( Error *e )
 			{ if( transport ) transport->ClientMismatch(e); };
+	void    	SetMaxWait( const int maxWait )
+			{ if( transport ) transport->SetMaxWait( maxWait ); };
 	void		DoHandshake( Error *e )
 			{ if( transport ) transport->DoHandshake(e); };
 
@@ -123,6 +126,8 @@ class NetBuffer : public NetTransport {
 	                { transport->GetEncryptionType( value ); }
 	void            GetPeerFingerprint(StrBuf &value)
 	                { transport->GetPeerFingerprint( value ); }
+	NetSslCredentials *GetPeerCredentials()
+	                { return transport->GetPeerCredentials(); }
 
 	// NetBuffer specials
 	// These babies take both send and receive Errors, so 
