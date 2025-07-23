@@ -63,10 +63,11 @@ the [Perforce downloads page](http://filehost.perforce.com/perforce/r19.1/).
 #### Windows
 
 Windows static libraries are located under `P4Plugin/Source/p4api/lib/win32` and `win32debug`.
-They also include OpenSSL 1.0.1 static libraries libeay32.lib and ssleay32.lib.
 
 Both directories contain libraries for Win32 - x86 only, not x64.
 They require Visual Studio v10.0 (2010).
+
+OpenSSL 1.0.1 static libraries are located under `P4Plugin/Source/openssl/lib/win32`.
 
 ## License and terms
 
