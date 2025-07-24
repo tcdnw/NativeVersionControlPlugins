@@ -29,7 +29,3 @@ triggers:
   branches:
     only:
       - "/.*/"
-  pull_requests:
-    - sources:
-        only:
-          - "/.*/"
