@@ -36,7 +36,7 @@ You need Unity 4.2+ to use the integrated version control plugins.
 To build:
 
 ```bash
-perl ./build.pl  
+perl ./build.pl
 ```
 
 To test:
@@ -45,13 +45,6 @@ To test:
 perl ./build.pl -test
 ```
 
-You need to clone `PerforceBinaries` from mercurial to get the binaries you will run the tests on. You can execute this command from NativeVersionControlPlugins root:
-```bash
-hg clone --config extensions.largefiles= http://hg-mirror-slo.hq.unity3d.com/unity-extra/perforce PerforceBinaries
-```
-
-Steps for setting up Mercurial can be found here: [Setting Up Mercurial](https://confluence.unity3d.com/display/DEV/Setting+Up+Mercurial)
-
 ### Perforce
 
 The Perforce plugin source code is located under `P4Plugin/Source`. It references the Perforce APIs,
@@ -59,6 +52,14 @@ located under `P4Plugin/Source/p4api`.
 
 We are targeting the 19.1 release of Perforce API includes and libraries, that were downloaded from
 the [Perforce downloads page](http://filehost.perforce.com/perforce/r19.1/).
+
+The `PerforceBinaries` where downloaded the same locations to run the integrations tests on.
+
+```bash
+mkdir -p 'PerforceBinaries\Win_x64'
+curl -ssL -o 'PerforceBinaries\Win_x64\p4.exe' 'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4.exe'
+curl -ssL -o 'PerforceBinaries\Win_x64\p4d.exe' 'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4d.exe'
+```
 
 #### Windows
 
