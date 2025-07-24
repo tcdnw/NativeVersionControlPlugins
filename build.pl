@@ -25,30 +25,30 @@ if ($clean)
 	rmtree("Release");
 	rmtree("Build");
 	find(\&wanted, "./");
-	sub wanted 
+	sub wanted
 	{
-    	my($filename, $dirs, $suffix) = fileparse($File::Find::name, qr/\.[^.]*/);
+		my($filename, $dirs, $suffix) = fileparse($File::Find::name, qr/\.[^.]*/);
 		if (($suffix eq ".o") or ($suffix eq ".obj"))
 		{
-    		print "delete $File::Find::name","\n";
-    		unlink($_);
+			print "delete $File::Find::name","\n";
+			unlink($_);
 		}
-    }
-    unlink("PerforcePlugin");
+	}
+	unlink("PerforcePlugin");
 	exit 0;
 }
 
 if (not $target)
 {
-	if ($^O eq "darwin") 
+	if ($^O eq "darwin")
 	{
-		$target = "mac";		
+		$target = "mac";
 	}
-	elsif ($^O eq "MSWin32") 
+	elsif ($^O eq "MSWin32")
 	{
 		$target = "win32";
 	}
-	elsif ($^O eq "linux") 
+	elsif ($^O eq "linux")
 	{
 		$target = "linux64";
 	}
@@ -60,7 +60,7 @@ if ($target eq "mac")
 {
 	unless ($test)
 	{
-		BuildMac();	
+		BuildMac();
 	}
 	else
 	{
@@ -71,7 +71,7 @@ elsif ($target eq "win32")
 {
 	unless ($test)
 	{
-		BuildWin32();	
+		BuildWin32();
 	}
 	else
 	{
@@ -100,26 +100,37 @@ elsif ($target eq "linux64")
 		TestLinux ($target);
 	}
 }
-else 
+else
 {
-    die ("Unknown platform");
+	die ("Unknown platform");
 }
 
 sub TestPerforce()
 {
-	IntegrationTest("Plugin", "localhost:1667", $testoption, $filter);
-	IntegrationTest("Plugin", "ssl:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/Common", "localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/Common", "ssl:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/BaseIPv4", "tcp4:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/SecureBaseIPv4", "ssl4:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/SquareBracketIPv4", "tcp4:[localhost]:1667", $testoption, $filter);
+	my $failed = 0;
+	$failed += IntegrationTest("1/8", "Plugin", "localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("2/8", "Plugin", "ssl:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("3/8", "Perforce/Common", "localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("4/8", "Perforce/Common", "ssl:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("5/8", "Perforce/BaseIPv4", "tcp4:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("6/8", "Perforce/SecureBaseIPv4", "ssl4:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("7/8", "Perforce/SquareBracketIPv4", "tcp4:[localhost]:1667", $testoption, $filter);
+	$failed += IntegrationTest("8/8", "Perforce/MultiFactorAuthentication", "localhost:1667", $testoption, $filter);
 	# Only works if DNS routes via IPv6
-	# IntegrationTest("Perforce/BaseIPv6", "tcp6:[localhost]:1667", $testoption, $filter);
+	# $failed += IntegrationTest("Perforce/BaseIPv6", "tcp6:[localhost]:1667", $testoption, $filter);
 	# Does not work in new version of Perforce server
-	# IntegrationTest("Perforce/SquareBracketIPv6", "tcp6:[::1]:1667", $testoption, $filter);
-	# IntegrationTest("Perforce/SecureSquareBracketIPv6", "ssl6:[::1]:1667", $testoption, $filter);
-	IntegrationTest("Perforce/MultiFactorAuthentication", "localhost:1667", $testoption, $filter);
+	# $failed += IntegrationTest("Perforce/SquareBracketIPv6", "tcp6:[::1]:1667", $testoption, $filter);
+	# $failed += IntegrationTest("Perforce/SecureSquareBracketIPv6", "ssl6:[::1]:1667", $testoption, $filter);
+
+	if ($failed > 0)
+	{
+		print "\nFAILURE $failed Perforce Integrations Test(s) failed!\n\n";
+		exit 1;
+	}
+	else
+	{
+		print "\nSUCCESS: All Perforce Integrations Tests passed\n\n";
+	}
 }
 
 sub BuildMac
@@ -143,9 +154,9 @@ sub TestMac
 
 sub BuildWin32
 {
-  rmtree("Build");
-  system("msbuilder.cmd", "VersionControl.sln", "P4Plugin", "Win32") && die ("Failed to build PerforcePlugin.exe");
-  system("msbuilder.cmd", "VersionControl.sln", "TestServer", "Win32") && die ("Failed to build TestServer.exe");
+	rmtree("Build");
+	system("msbuilder.cmd", "VersionControl.sln", "P4Plugin", "Win32") && die ("Failed to build PerforcePlugin.exe");
+	system("msbuilder.cmd", "VersionControl.sln", "TestServer", "Win32") && die ("Failed to build TestServer.exe");
 }
 
 sub TestWin32
