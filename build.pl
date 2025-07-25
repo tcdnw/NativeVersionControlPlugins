@@ -161,12 +161,6 @@ sub TestWin32
 
 sub BuildLinux ($)
 {
-	my $cflags = '-O3 -fPIC -fexceptions -fvisibility=hidden -DLINUX';
-	my $cxxflags = "$cflags -Wno-ctor-dtor-private";
-
-	$ENV{'CFLAGS'} = $cflags;
-	$ENV{'CXXFLAGS'} = $cxxflags;
-
 	system ('make', '-f', 'Makefile.gnu', 'clean');
 	system ('make', '-f', 'Makefile.gnu') && die ("Failed to build PerforcePlugin for linux64");
 }
