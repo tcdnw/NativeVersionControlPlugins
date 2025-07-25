@@ -78,17 +78,6 @@ elsif ($target eq "win32")
 		TestWin32();
 	}
 }
-elsif ($target eq "linux32")
-{
-	unless ($test)
-	{
-		BuildLinux ($target);
-	}
-	else
-	{
-		TestLinux ($target);
-	}
-}
 elsif ($target eq "linux64")
 {
 	unless ($test)
@@ -137,7 +126,7 @@ sub TestPerforce()
 sub BuildMac
 {
 	rmtree("Build");
-	system("make" , "-f", "Makefile.osx", "all") && die ("Failed to build version control plugins");
+	system("make" , "-f", "Makefile.osx", "all") && die ("Failed to build PerforcePlugin for macOS");
 }
 
 sub TestMac
@@ -172,31 +161,18 @@ sub TestWin32
 
 sub BuildLinux ($)
 {
-	my $platform = shift;
-
 	my $cflags = '-O3 -fPIC -fexceptions -fvisibility=hidden -DLINUX';
 	my $cxxflags = "$cflags -Wno-ctor-dtor-private";
-	my $ldflags = '';
-
-	if ($platform eq 'linux32') {
-		$cflags = "$cflags -m32";
-		$cxxflags = "$cxxflags -m32";
-		$ldflags = '-m32';
-	}
 
 	$ENV{'CFLAGS'} = $cflags;
 	$ENV{'CXXFLAGS'} = $cxxflags;
-	$ENV{'LDFLAGS'} = $ldflags;
-	$ENV{'PLATFORM'} = $platform;
 
 	system ('make', '-f', 'Makefile.gnu', 'clean');
-	system ('make', '-f', 'Makefile.gnu') && die ("Failed to build $platform");
+	system ('make', '-f', 'Makefile.gnu') && die ("Failed to build PerforcePlugin for linux64");
 }
 
 sub TestLinux ($)
 {
-	my $platform = shift;
-
 	$ENV{'P4DEXEC'} = "PerforceBinaries/linux64/p4d";
 	$ENV{'P4EXEC'} = "PerforceBinaries/linux64/p4";
 	$ENV{'P4PLUGIN'} = "Build/linux64/PerforcePlugin";

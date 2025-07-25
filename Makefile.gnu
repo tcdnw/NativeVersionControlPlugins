@@ -10,6 +10,7 @@ GTK3_LIBRARIES = -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-
 CXXFLAGS += -O2 -g -fpermissive -Wno-deprecated-declarations $(GTK3_INCLUDE) $(P4PLUGIN_INCLUDE)
 LDFLAGS += -g
 LIBRARIES = -lstdc++ -lrt $(GTK3_LIBRARIES)
+PLATFORM = linux64
 
 COMMON_MODULES = $(COMMON_SRCS:.c=.o)
 COMMON_MODULES := $(COMMON_MODULES:.cpp=.o)
