@@ -108,19 +108,20 @@ else
 sub TestPerforce()
 {
 	my $failed = 0;
-	$failed += IntegrationTest("1/8", "Plugin", "localhost:1667", $testoption, $filter);
-	$failed += IntegrationTest("2/8", "Plugin", "ssl:localhost:1667", $testoption, $filter);
-	$failed += IntegrationTest("3/8", "Perforce/Common", "localhost:1667", $testoption, $filter);
-	$failed += IntegrationTest("4/8", "Perforce/Common", "ssl:localhost:1667", $testoption, $filter);
-	$failed += IntegrationTest("5/8", "Perforce/BaseIPv4", "tcp4:localhost:1667", $testoption, $filter);
-	$failed += IntegrationTest("6/8", "Perforce/SecureBaseIPv4", "ssl4:localhost:1667", $testoption, $filter);
-	$failed += IntegrationTest("7/8", "Perforce/SquareBracketIPv4", "tcp4:[localhost]:1667", $testoption, $filter);
-	$failed += IntegrationTest("8/8", "Perforce/MultiFactorAuthentication", "localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("1-7", "Plugin", "localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("2-7", "Plugin", "ssl:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("3-7", "Perforce/Common", "localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("4-7", "Perforce/Common", "ssl:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("5-7", "Perforce/BaseIPv4", "tcp4:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("6-7", "Perforce/SecureBaseIPv4", "ssl4:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("7-7", "Perforce/SquareBracketIPv4", "tcp4:[localhost]:1667", $testoption, $filter);
+	# Only works locally, not in CI
+	# $failed += IntegrationTest("8-7", "Perforce/MultiFactorAuthentication", "localhost:1667", $testoption, $filter);
 	# Only works if DNS routes via IPv6
-	# $failed += IntegrationTest("Perforce/BaseIPv6", "tcp6:[localhost]:1667", $testoption, $filter);
+	# $failed += IntegrationTest("9-7", "Perforce/BaseIPv6", "tcp6:[localhost]:1667", $testoption, $filter);
 	# Does not work in new version of Perforce server
-	# $failed += IntegrationTest("Perforce/SquareBracketIPv6", "tcp6:[::1]:1667", $testoption, $filter);
-	# $failed += IntegrationTest("Perforce/SecureSquareBracketIPv6", "ssl6:[::1]:1667", $testoption, $filter);
+	# $failed += IntegrationTest("10-7", "Perforce/SquareBracketIPv6", "tcp6:[::1]:1667", $testoption, $filter);
+	# $failed += IntegrationTest("11-7", "Perforce/SecureSquareBracketIPv6", "ssl6:[::1]:1667", $testoption, $filter);
 
 	if ($failed > 0)
 	{
