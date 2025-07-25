@@ -8,6 +8,8 @@
 
 #ifdef _WIN32
 #include <direct.h>
+#define getcwd _getcwd // MSVC warning C4996: 'getcwd': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getcwd.
+#define unlink _unlink // MSVC warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink.
 #endif
 
 void printStatus(bool ok);
