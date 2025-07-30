@@ -1,19 +1,20 @@
 name: Mac - Build & Test VCS plugins
 agent:
-    type: Unity::VM::osx
-    image: desktop/unity-macos-10.15-xcode-12.2:stable
-    flavor: b1.large
+  type: Unity::VM::osx
+  image: desktop/unity-macos-10.15-xcode-12.2:stable
+  flavor: b1.large
 
 commands:
-        - hg clone --config extensions.largefiles= http://hg-mirror-slo.hq.unity3d.com/unity-extra/perforce PerforceBinaries
-        - perl build.pl | tee mac_build.txt
-        - perl build.pl -test | tee mac_test.txt
+  # Build PerforcePlugin and TestServer
+  - perl build.pl
+
+  # Perforce CLI and server
+  - chmod +x PerforceBinaries/OSX/p4 PerforceBinaries/OSX/p4d
+
+  # Run Perforce integration tests with the TestServer
+  - perl build.pl -test
 
 artifacts:
-    builds:
-      paths:
-        - "Build/OSXx64/PerforcePlugin"
-    logs:
-      paths:
-        - "mac_build.txt"
-        - "mac_test.txt"
+  builds:
+    paths:
+      - "Build/OSXx64/PerforcePlugin"

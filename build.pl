@@ -25,30 +25,30 @@ if ($clean)
 	rmtree("Release");
 	rmtree("Build");
 	find(\&wanted, "./");
-	sub wanted 
+	sub wanted
 	{
-    	my($filename, $dirs, $suffix) = fileparse($File::Find::name, qr/\.[^.]*/);
+		my($filename, $dirs, $suffix) = fileparse($File::Find::name, qr/\.[^.]*/);
 		if (($suffix eq ".o") or ($suffix eq ".obj"))
 		{
-    		print "delete $File::Find::name","\n";
-    		unlink($_);
+			print "delete $File::Find::name","\n";
+			unlink($_);
 		}
-    }
-    unlink("PerforcePlugin");
+	}
+	unlink("PerforcePlugin");
 	exit 0;
 }
 
 if (not $target)
 {
-	if ($^O eq "darwin") 
+	if ($^O eq "darwin")
 	{
-		$target = "mac";		
+		$target = "mac";
 	}
-	elsif ($^O eq "MSWin32") 
+	elsif ($^O eq "MSWin32")
 	{
 		$target = "win32";
 	}
-	elsif ($^O eq "linux") 
+	elsif ($^O eq "linux")
 	{
 		$target = "linux64";
 	}
@@ -60,7 +60,7 @@ if ($target eq "mac")
 {
 	unless ($test)
 	{
-		BuildMac();	
+		BuildMac();
 	}
 	else
 	{
@@ -71,22 +71,11 @@ elsif ($target eq "win32")
 {
 	unless ($test)
 	{
-		BuildWin32();	
+		BuildWin32();
 	}
 	else
 	{
 		TestWin32();
-	}
-}
-elsif ($target eq "linux32")
-{
-	unless ($test)
-	{
-		BuildLinux ($target);
-	}
-	else
-	{
-		TestLinux ($target);
 	}
 }
 elsif ($target eq "linux64")
@@ -100,32 +89,44 @@ elsif ($target eq "linux64")
 		TestLinux ($target);
 	}
 }
-else 
+else
 {
-    die ("Unknown platform");
+	die ("Unknown platform");
 }
 
 sub TestPerforce()
 {
-	IntegrationTest("Plugin", "localhost:1667", $testoption, $filter);
-	IntegrationTest("Plugin", "ssl:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/Common", "localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/Common", "ssl:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/BaseIPv4", "tcp4:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/SecureBaseIPv4", "ssl4:localhost:1667", $testoption, $filter);
-	IntegrationTest("Perforce/SquareBracketIPv4", "tcp4:[localhost]:1667", $testoption, $filter);
+	my $failed = 0;
+	$failed += IntegrationTest("1-7", "Plugin", "localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("2-7", "Plugin", "ssl:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("3-7", "Perforce/Common", "localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("4-7", "Perforce/Common", "ssl:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("5-7", "Perforce/BaseIPv4", "tcp4:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("6-7", "Perforce/SecureBaseIPv4", "ssl4:localhost:1667", $testoption, $filter);
+	$failed += IntegrationTest("7-7", "Perforce/SquareBracketIPv4", "tcp4:[localhost]:1667", $testoption, $filter);
+	# Only works locally, not in CI
+	# $failed += IntegrationTest("8-7", "Perforce/MultiFactorAuthentication", "localhost:1667", $testoption, $filter);
 	# Only works if DNS routes via IPv6
-	# IntegrationTest("Perforce/BaseIPv6", "tcp6:[localhost]:1667", $testoption, $filter);
+	# $failed += IntegrationTest("9-7", "Perforce/BaseIPv6", "tcp6:[localhost]:1667", $testoption, $filter);
 	# Does not work in new version of Perforce server
-	# IntegrationTest("Perforce/SquareBracketIPv6", "tcp6:[::1]:1667", $testoption, $filter);
-	# IntegrationTest("Perforce/SecureSquareBracketIPv6", "ssl6:[::1]:1667", $testoption, $filter);
-	IntegrationTest("Perforce/MultiFactorAuthentication", "localhost:1667", $testoption, $filter);
+	# $failed += IntegrationTest("10-7", "Perforce/SquareBracketIPv6", "tcp6:[::1]:1667", $testoption, $filter);
+	# $failed += IntegrationTest("11-7", "Perforce/SecureSquareBracketIPv6", "ssl6:[::1]:1667", $testoption, $filter);
+
+	if ($failed > 0)
+	{
+		print "\nFAILURE $failed Perforce Integrations Test(s) failed!\n\n";
+		exit 1;
+	}
+	else
+	{
+		print "\nSUCCESS: All Perforce Integrations Tests passed\n\n";
+	}
 }
 
 sub BuildMac
 {
 	rmtree("Build");
-	system("make" , "-f", "Makefile.osx", "all") && die ("Failed to build version control plugins");
+	system("make" , "-f", "Makefile.osx", "all") && die ("Failed to build PerforcePlugin for macOS");
 }
 
 sub TestMac
@@ -143,9 +144,9 @@ sub TestMac
 
 sub BuildWin32
 {
-  rmtree("Build");
-  system("msbuilder.cmd", "VersionControl.sln", "P4Plugin", "Win32") && die ("Failed to build PerforcePlugin.exe");
-  system("msbuilder.cmd", "VersionControl.sln", "TestServer", "Win32") && die ("Failed to build TestServer.exe");
+	rmtree("Build");
+	system("msbuilder.cmd", "VersionControl.sln", "P4Plugin", "Win32") && die ("Failed to build PerforcePlugin.exe");
+	system("msbuilder.cmd", "VersionControl.sln", "TestServer", "Win32") && die ("Failed to build TestServer.exe");
 }
 
 sub TestWin32
@@ -160,31 +161,12 @@ sub TestWin32
 
 sub BuildLinux ($)
 {
-	my $platform = shift;
-
-	my $cflags = '-O3 -fPIC -fexceptions -fvisibility=hidden -DLINUX';
-	my $cxxflags = "$cflags -Wno-ctor-dtor-private";
-	my $ldflags = '';
-
-	if ($platform eq 'linux32') {
-		$cflags = "$cflags -m32";
-		$cxxflags = "$cxxflags -m32";
-		$ldflags = '-m32';
-	}
-
-	$ENV{'CFLAGS'} = $cflags;
-	$ENV{'CXXFLAGS'} = $cxxflags;
-	$ENV{'LDFLAGS'} = $ldflags;
-	$ENV{'PLATFORM'} = $platform;
-
 	system ('make', '-f', 'Makefile.gnu', 'clean');
-	system ('make', '-f', 'Makefile.gnu') && die ("Failed to build $platform");
+	system ('make', '-f', 'Makefile.gnu') && die ("Failed to build PerforcePlugin for linux64");
 }
 
 sub TestLinux ($)
 {
-	my $platform = shift;
-
 	$ENV{'P4DEXEC'} = "PerforceBinaries/linux64/p4d";
 	$ENV{'P4EXEC'} = "PerforceBinaries/linux64/p4";
 	$ENV{'P4PLUGIN'} = "Build/linux64/PerforcePlugin";

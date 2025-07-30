@@ -36,7 +36,7 @@ You need Unity 4.2+ to use the integrated version control plugins.
 To build:
 
 ```bash
-perl ./build.pl  
+perl ./build.pl
 ```
 
 To test:
@@ -45,26 +45,30 @@ To test:
 perl ./build.pl -test
 ```
 
-You need to clone `PerforceBinaries` from mercurial to get the binaries you will run the tests on. You can execute this command from NativeVersionControlPlugins root:
+### Perforce
+
+The Perforce plugin source code is located under `P4Plugin/Source`. It references the Perforce APIs,
+located under `P4Plugin/Source/p4api`.
+
+We are targeting the 21.2 release of Perforce API includes and libraries, that were downloaded from
+the [Perforce downloads page](http://filehost.perforce.com/perforce/r21.2/).
+
+The `PerforceBinaries` where downloaded the same locations to run the integrations tests on.
+
 ```bash
-hg clone --config extensions.largefiles= http://hg-mirror-slo.hq.unity3d.com/unity-extra/perforce PerforceBinaries
+mkdir -p 'PerforceBinaries\Win_x64'
+curl -ssL -o 'PerforceBinaries\Win_x64\p4.exe' 'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4.exe'
+curl -ssL -o 'PerforceBinaries\Win_x64\p4d.exe' 'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4d.exe'
 ```
 
-Steps for setting up Mercurial can be found here: [Setting Up Mercurial](https://confluence.unity3d.com/display/DEV/Setting+Up+Mercurial)
+#### Windows
 
-###  Perforce
+Windows static libraries are located under `P4Plugin/Source/p4api/lib/win32` and `win32debug`.
 
-The Perforce plugin source code is located under `/P4Plugin/Source`. It references the Perforce APIs, located under
-`/P4Plugin/Source/r19.1`. As its name states, we're targeting the 19.1 release of Perforce.
+Both directories contain libraries for Win32 - x86 only, not x64.
+They require Visual Studio v10.0 (2010).
 
-Perforce API includes and libraries were downloaded from the
-[Perforce downloads page](http://filehost.perforce.com/perforce/r19.1/).
-
-####  Windows
-
-Windows binaries are located under `/P4Plugin/Source/r17.2/lib/win32` and `/P4Plugin/Source/r17.2/lib/win32debug`.
-
-Both directories contain libraries for Win32 - x86 only. They require Visual Studio v10.0 (2010).
+OpenSSL 1.0.1 static libraries are located under `P4Plugin/Source/openssl/lib/win32`.
 
 ## License and terms
 

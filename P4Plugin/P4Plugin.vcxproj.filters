@@ -146,12 +146,6 @@
     <ClCompile Include="Source\P4FileModeCommand.cpp">
       <Filter>P4Plugin</Filter>
     </ClCompile>
-    <ClCompile Include="..\Common\Connection.cpp">
-      <Filter>P4Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Pipe.cpp">
-      <Filter>P4Plugin</Filter>
-    </ClCompile>
     <ClCompile Include="Source\P4InfoCommand.cpp">
       <Filter>P4Plugin</Filter>
     </ClCompile>
@@ -160,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="Source\P4MFA.cpp">
       <Filter>P4Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Pipe.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Connection.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,11 +247,25 @@
     <ClInclude Include="..\Common\POpen.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Connection.h" />
-    <ClInclude Include="..\Common\Pipe.h" />
-    <ClInclude Include="Source\P4Info.h" />
-    <ClInclude Include="Source\P4Stream.h" />
     <ClInclude Include="Source\P4MFA.h">
+      <Filter>P4Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P4Stream.h">
+      <Filter>P4Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P4Info.h">
+      <Filter>P4Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Pipe.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Connection.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Commands\ChangeDescription.h">
+      <Filter>Common\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P4PluginVersion.h">
       <Filter>P4Plugin</Filter>
     </ClInclude>
   </ItemGroup>
