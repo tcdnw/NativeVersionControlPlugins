@@ -105,8 +105,15 @@ sub RunTests()
 
 	if (not(-e -f -x $testserver))
 	{
-		print "Error testserver '$testserver' doesn't exist\n";
-		return 1;
+		print "\n[$suite][$count/$total] Error testserver '$testserver' doesn't exist\n\n";
+		if ($total > 0)
+		{
+			return $total;
+		}
+		else
+		{
+			return 1;
+		}
 	}
 
 	$cwd = getcwd();
