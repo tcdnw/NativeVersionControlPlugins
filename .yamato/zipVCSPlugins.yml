@@ -7,17 +7,17 @@ agent:
 interpreter: powershell
 commands:
   - mkdir linux64
-  - mkdir OSXx64
+  - mkdir OSX
   - mkdir Win32
   - Copy-Item Build/linux64/* linux64 -Recurse
-  - Copy-Item Build/OSXx64/* OSXx64 -Recurse
+  - Copy-Item Build/OSX/* OSX -Recurse
   - Copy-Item Build/Win32/*  Win32 -Recurse
 
 artifacts:
   builds:
     paths:
       - "linux64/**"
-      - "OSXx64/**"
+      - "OSX/**"
       - "Win32/**"
 
 dependencies:
