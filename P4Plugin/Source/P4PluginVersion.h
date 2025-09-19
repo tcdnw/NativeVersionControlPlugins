@@ -13,5 +13,6 @@
 //       2021.3.38f1, 2023.2.19f1, 6000.0.0b14
 // 1.3.0 2025/07/29 P4 API 2021.2 for Perforce Cloud
 // 1.4.0 build with Visual Studio 2022 and Windows 10 SDK for long path names
+//       add support for macOS arm64 using P4 API 2024.1 (for macOS only)
 
 #define PERFORCE_PLUGIN_VERSION "1.4.0"
