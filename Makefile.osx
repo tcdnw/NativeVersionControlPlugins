@@ -10,8 +10,8 @@ ifeq ($(BUILD_TARGET),P4PluginX64)
 	LDFLAGS = -L./P4Plugin/Source/p4api/lib/osx64 -L./P4Plugin/Source/openssl/lib/osx64 -arch x86_64 -lstdc++ -mmacosx-version-min=10.11
 else
 	PLATFORM = OSXarm64
-	CXXFLAGS = -O2 -arch arm64 -mmacosx-version-min=12.0 
-	LDFLAGS = -L./P4Plugin/Source/p4api/lib/osxarm64 -L./P4Plugin/Source/openssl/lib/osxarm64 -arch arm64 -lstdc++ -mmacosx-version-min=12.0
+	CXXFLAGS = -O2 -arch arm64 -mmacosx-version-min=11.0 
+	LDFLAGS = -L./P4Plugin/Source/p4api/lib/osxarm64 -L./P4Plugin/Source/openssl/lib/osxarm64 -arch arm64 -lstdc++ -mmacosx-version-min=11.0
 endif
 
 COMMON_MODULES = $(COMMON_SRCS:.c=.o)
