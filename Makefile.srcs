@@ -79,3 +79,6 @@ P4PLUGIN_INCLS = ./P4Plugin/Source/P4Command.h \
 
 P4PLUGIN_LINK = -lclient -lrpc -lsupp -lp4api -lp4script -lp4script_curl -lp4script_sqlite -lp4script_c -lssl -lcrypto
 P4PLUGIN_INCLUDE = -I./Common -I./P4Plugin/Source/p4api/include/p4 -I./P4Plugin/Source
+
+# Temporarily use the old include_r21.2 for Linux build until we can find the time to update it to the newest API and validate it fully
+P4PLUGIN_INCLUDE_OLD = -I./Common -I./P4Plugin/Source/p4api/include_r21.2/p4 -I./P4Plugin/Source

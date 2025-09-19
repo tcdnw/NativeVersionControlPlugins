@@ -8,7 +8,7 @@ GTK3_INCLUDE = -I/usr/include/gtk-3.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-
 GTK3_LIBRARIES = -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0
 
 CFLAGS += -O3 -g -fPIC -fexceptions -fvisibility=hidden -DLINUX
-CXXFLAGS += $(CFLAGS) -fpermissive -Wno-deprecated-declarations $(GTK3_INCLUDE) $(P4PLUGIN_INCLUDE)
+CXXFLAGS += $(CFLAGS) -fpermissive -Wno-deprecated-declarations $(GTK3_INCLUDE) $(P4PLUGIN_INCLUDE_OLD)
 LDFLAGS += -g -pthread
 LIBRARIES += -lstdc++ -lrt $(GTK3_LIBRARIES)
 PLATFORM = linux64
@@ -45,7 +45,7 @@ Test/Source/%.o : Test/Source/%.cpp $(TESTSERVER_INCLS)
 	$(CXX) $(CXXFLAGS) $(TESTSERVER_INCLUDE) -c $< -o $@
 
 P4Plugin/Source/%.o : P4Plugin/Source/%.cpp $(COMMON_INCLS) $(P4PLUGIN_INCLS)
-	$(CXX) $(CXXFLAGS) $(P4PLUGIN_INCLUDE) -D_LINUX -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(P4PLUGIN_INCLUDE_OLD) -D_LINUX -c $< -o $@
 
 $(TESTSERVER_TARGET): $(COMMON_MODULES) $(TESTSERVER_MODULES)
 	$(CXX) -g $(LDFLAGS) -o $@ $^
