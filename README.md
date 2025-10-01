@@ -50,15 +50,24 @@ perl ./build.pl -test
 The Perforce plugin source code is located under `P4Plugin/Source`. It references the Perforce APIs,
 located under `P4Plugin/Source/p4api`.
 
-We are targeting the 21.2 release of Perforce API includes and libraries, that were downloaded from
+The Windows and Linux builds are targeting the release 21.2 of Perforce API includes and libraries, that were downloaded from
 the [Perforce downloads page](http://filehost.perforce.com/perforce/r21.2/).
+
+The macOS build is targeting the release 24.1 of Perforce API includes and libraries, that were downloaded from
+the [Perforce downloads page](http://filehost.perforce.com/perforce/r24.1/).
 
 The `PerforceBinaries` where downloaded the same locations to run the integrations tests on.
 
 ```bash
-mkdir -p 'PerforceBinaries\Win_x64'
-curl -ssL -o 'PerforceBinaries\Win_x64\p4.exe' 'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4.exe'
-curl -ssL -o 'PerforceBinaries\Win_x64\p4d.exe' 'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4d.exe'
+curl -fssL -o 'PerforceBinaries\Win_x64\p4.exe'  'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4.exe'
+curl -fssL -o 'PerforceBinaries\Win_x64\p4d.exe' 'https://filehost.perforce.com/perforce/r21.2/bin.ntx64/p4d.exe'
+```
+
+```bash
+curl -fssL -o 'PerforceBinaries/OSX/arm64/p4'    'https://filehost.perforce.com/perforce/r24.1/bin.macosx12arm64/p4'
+curl -fssL -o 'PerforceBinaries/OSX/arm64/p4d'   'https://filehost.perforce.com/perforce/r24.1/bin.macosx12arm64/p4d'
+curl -fssL -o 'PerforceBinaries/OSX/x86_64/p4'   'https://filehost.perforce.com/perforce/r24.1/bin.macosx1015x86_64/p4'
+curl -fssL -o 'PerforceBinaries/OSX/x86_64/p4d'  'https://filehost.perforce.com/perforce/r24.1/bin.macosx1015x86_64/p4d'
 ```
 
 #### Windows

@@ -1,15 +1,17 @@
 name: Mac - Build & Test VCS plugins
 agent:
   type: Unity::VM::osx
-  image: desktop/unity-macos-10.15-xcode-12.2:stable
-  flavor: b1.large
+  image: build-system/unity-macos-13-arm64-unity:v2.4499056
+  flavor: b1.xlarge
+  model: M1
 
 commands:
   # Build PerforcePlugin and TestServer
   - perl build.pl
 
   # Perforce CLI and server
-  - chmod +x PerforceBinaries/OSX/p4 PerforceBinaries/OSX/p4d
+  - chmod +x PerforceBinaries/OSX/arm64/p4 PerforceBinaries/OSX/arm64/p4d
+  - chmod +x PerforceBinaries/OSX/x86_64/p4 PerforceBinaries/OSX/x86_64/p4d
 
   # Run Perforce integration tests with the TestServer
   - perl build.pl -test
@@ -17,4 +19,4 @@ commands:
 artifacts:
   builds:
     paths:
-      - "Build/OSXx64/PerforcePlugin"
+      - "Build/OSX/PerforcePlugin"

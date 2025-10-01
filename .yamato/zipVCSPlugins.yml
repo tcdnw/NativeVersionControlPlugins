@@ -1,29 +1,30 @@
 name: Zip VCS plugins
 agent:
   type: Unity::VM
-  image: core-kaunas/win10-vs2010:latest
+  image: slough-ops/ubuntu-22.04-base:latest
   flavor: b1.small
 
-interpreter: powershell
 commands:
   - mkdir linux64
-  - mkdir OSXx64
+  - cp Build/linux64/* linux64
+
+  - mkdir OSX
+  - cp Build/OSX/* OSX
+
   - mkdir Win32
-  - Copy-Item Build/linux64/* linux64 -Recurse
-  - Copy-Item Build/OSXx64/* OSXx64 -Recurse
-  - Copy-Item Build/Win32/*  Win32 -Recurse
+  - cp Build/Win32/*  Win32
 
 artifacts:
   builds:
     paths:
       - "linux64/**"
-      - "OSXx64/**"
+      - "OSX/**"
       - "Win32/**"
 
 dependencies:
-  - .yamato/windows-build.yml
   - .yamato/linux-build.yml
   - .yamato/osx-build.yml
+  - .yamato/windows-build.yml
 
 triggers:
   branches:
